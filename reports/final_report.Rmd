@@ -1,6 +1,6 @@
 ---
 title: "Digital Divide in Illinois Counties"
-author: "YOUR NAME"
+author: "Huan Yang"
 output:
   html_document:
     toc: true
