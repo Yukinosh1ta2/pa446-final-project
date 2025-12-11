@@ -18,37 +18,6 @@ The project includes:
 - An interactive HTML table inside the report  
 
 ---
-
-## Repository Structure
-
-```text
-project-root/
-  README.md
-  data/
-    raw/
-      il_broadband_raw.rds
-    processed/
-      il_broadband_geo.rds
-      il_broadband.csv
-  figs/
-    map_broadband.png
-    scatter_income_broadband.png
-    hist_pct_broadband.png
-  scripts/
-    01_get_data.R
-    02_clean_broadband.R
-    03_analysis_plots.R
-    04_decision_tree.R
-    # (optional) 00_run_all.R
-  reports/
-    final_report_clean.Rmd
-    final_report_clean.html  # knitted output
-  memo/
-    final_memo.docx          # reflection memo
-```
-
----
-
 ## Data Description
 
 ### Source
@@ -88,7 +57,7 @@ Two processed files are created in `scripts/02_clean_broadband.R`:
 
 All scripts are in the `scripts/` folder.
 
-### `01_get_data.R`
+### `data.R`
 
 - Loads packages (`tidycensus`, `tidyverse`, `sf`)  
 - Sets ACS year and state (Illinois)  
@@ -97,7 +66,7 @@ All scripts are in the `scripts/` folder.
 
 > Note: You need a Census API key set in your R environment (via `census_api_key()` or `.Renviron`) for this script to run.
 
-### `02_clean_broadband.R`
+### `clean.R`
 
 - Reads `data/raw/il_broadband_raw.rds`  
 - Cleans and renames variables  
@@ -106,7 +75,7 @@ All scripts are in the `scripts/` folder.
   - `data/processed/il_broadband_geo.rds`
   - `data/processed/il_broadband.csv`
 
-### `03_analysis_plots.R`
+### `plot.R`
 
 - Reads `data/processed/il_broadband_geo.rds` and `data/processed/il_broadband.csv`  
 - Produces three visualizations and saves them to `figs/`:
@@ -116,7 +85,7 @@ All scripts are in the `scripts/` folder.
 
 These PNG files are later included in the R Markdown report.
 
-### `04_decision_tree.R`
+### `decisiontree.R`
 
 - Reads `data/processed/il_broadband.csv`  
 - Creates a binary variable `low_bb` indicating whether a county’s broadband percentage is below the statewide median  
@@ -125,14 +94,6 @@ These PNG files are later included in the R Markdown report.
 - Computes model performance metrics and plots the decision tree  
 
 This script is mainly a development/analysis script; the final decision tree code is also included inside the R Markdown report.
-
-### (Optional) `00_run_all.R`
-
-If present, this script can be used as a “pipeline runner”:
-
-- Runs `01_get_data.R`  
-- Runs `02_clean_broadband.R`  
-- Knits the report  
 
 ---
 
@@ -217,8 +178,8 @@ If you only want to use the provided processed data (`data/processed/*`), you ca
 From the RStudio console:
 
 ```r
-source("scripts/01_get_data.R")        # downloads raw ACS data
-source("scripts/02_clean_broadband.R") # cleans and processes data
+source("scripts/data.R")        # downloads raw ACS data
+source("scripts/R") # cleans and processes data
 ```
 
 This will create/update the raw and processed data files.
@@ -226,7 +187,7 @@ This will create/update the raw and processed data files.
 ### 6. Generate figures (if needed)
 
 ```r
-source("scripts/03_analysis_plots.R")
+source("scripts/plot.R")
 ```
 
 This will write the PNG files used in the report to the `figs/` folder.
@@ -236,10 +197,10 @@ This will write the PNG files used in the report to the `figs/` folder.
 Open `reports/final_report_clean.Rmd` in RStudio and click **Knit** (to HTML).  
 The output file `final_report_clean.html` will appear in the same folder.
 
-### 8. (Optional) Run the decision tree script
+### 8. Run the decision tree script
 
 ```r
-source("scripts/04_decision_tree.R")
+source("scripts/decisiontree.R")
 ```
 
 This is mainly for exploring the model outside the report.
@@ -251,4 +212,3 @@ This is mainly for exploring the model outside the report.
 - All paths in the scripts and R Markdown file assume that you are running R from the **project root** (the folder that contains `data/`, `scripts/`, `reports/`, etc.).  
 - If you change folder names or move files, you may need to update the paths accordingly.  
 
-This README is meant to give another student or instructor enough information to understand the project, see how the data were prepared, and fully reproduce the analysis and visuals.
