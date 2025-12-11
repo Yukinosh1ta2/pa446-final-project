@@ -9,7 +9,6 @@ il_df  <- read_csv("data/processed/il_broadband.csv", show_col_types = FALSE)
 
 if (!dir.exists("figs")) dir.create("figs", recursive = TRUE)
 
-### 1. Map of % broadband by county ----
 
 tmap_mode("plot")
 
@@ -28,7 +27,6 @@ map_broadband
 
 tmap_save(map_broadband, filename = "figs/map_broadband.png")
 
-### 2. Scatter: income vs broadband ----
 
 scatter_income_bb <- ggplot(il_df, aes(x = med_income, y = pct_broadband_any)) +
   geom_point() +
@@ -44,3 +42,16 @@ scatter_income_bb
 ggsave("figs/scatter_income_broadband.png", scatter_income_bb, width = 7, height = 5)
 
 
+if (!dir.exists("figs")) dir.create("figs", recursive = TRUE)
+
+hist_broadband <- ggplot(il_df, aes(x = pct_broadband_any)) +
+  geom_histogram(bins = 15) +
+  labs(
+    x = "% households with broadband",
+    y = "Number of counties",
+    title = "Distribution of Broadband Access Across Illinois Counties"
+  )
+
+hist_broadband
+
+ggsave("figs/hist_pct_broadband.png", hist_broadband, width = 7, height = 5, dpi = 300)
