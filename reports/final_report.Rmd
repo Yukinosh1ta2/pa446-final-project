@@ -21,7 +21,6 @@ library(rpart.plot)
 library(knitr)
 library(DT)
 
-# Assume this Rmd is in reports/, so go up one level to data/
 il_geo <- readRDS("../data/processed/il_broadband_geo.rds")
 il_df  <- read_csv("../data/processed/il_broadband.csv", show_col_types = FALSE)
 ```
